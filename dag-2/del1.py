@@ -4,21 +4,26 @@ with open("input.txt", "r") as file:
 
 reports = [[int(level) for level in line.split()] for line in lines]
 
-safe_reports = 0
-for report in reports:
+
+def safe_report(report: list[int]):
     increasing = False
     decreasing = False
 
     for i in range(len(report) - 1):
         delta = report[i] - report[i+1]
         if delta == 0 or abs(delta) > 3:
-            break
+            return False
         elif delta > 0:
             decreasing = True
         else:
             increasing = True
-    else:
-        if not(increasing and decreasing):
-            safe_reports += 1
+    if not(increasing and decreasing):
+            return True
+
+
+safe_reports = 0
+for report in reports:
+    if safe_report(report):
+        safe_reports += 1
 
 print(safe_reports)
